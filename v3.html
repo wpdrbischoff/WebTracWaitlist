@@ -1,0 +1,56 @@
+<script>
+var waitlist_activity_codes = [];
+var search_page_dict = {};
+
+function getActivityCode(data) {
+    var details = $(data).find('[data-title="Details"')[0];
+    return details.innerText.split('\xa0')[0];
+}
+
+function getSearchPageData(rows){
+    url = "search.html?module=AR&search=Yes&Keyword="+waitlist_activity_codes.join(",");
+
+    $.get(url)
+        .done(function(searchPageData) {
+            var html_ret = $.parseHTML(searchPageData);
+            $(html_ret).find('.table#arwebsearch_output_table').each(function(){
+                var an = $(this).find('td[data-title="Activity #"]')[0].innerText;
+                var av = $(this).find('td[data-title="Availability"]')[0].innerText;;
+                search_page_dict[an] = av;
+            })
+            rows.each(function(){
+                var code = getActivityCode(this);
+                    var status = search_page_dict[code];
+                    var button = $(this).find("a.primary.button")[0];
+                    console.log(status);
+                    switch(status) {
+                        case ("Unavailable" || "Full"):
+                            $(button).css("background-color", "red");
+                            button.innerText = status;
+                            break;
+
+                        case "Waitlist":
+                            $(button).css("background-color", "orange");
+                            button.innerText = status;
+                            break;
+
+                        default:
+                            $(button).css("background-color", "green");
+                            break;
+                    }
+                })
+
+        }, "html")
+};
+
+function init() {
+    var waitListRows = $('#webwishlist_resultsoutput tbody tr');
+    waitListRows.each(function(){
+        waitlist_activity_codes.push(getActivityCode(this));
+    });
+
+   getSearchPageData(waitListRows);
+}
+</script>
+
+<body onload="checkIfExist()">

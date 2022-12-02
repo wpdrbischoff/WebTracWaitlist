@@ -1,0 +1,39 @@
+<script>
+function checkIfExist(){
+  var buttonDIV = document.getElementById('buttons');
+  var wishlistData= document.getElementById('webwishlist_group1');
+  var WishlistEmpty = wishlistData.innerHTML.includes('Your Wishlist is Empty');
+  if(!WishlistEmpty){
+     buttonDIV.style.display = "inline";
+  }
+}
+
+    function showTableData() {
+        document.getElementById('loadingResults').outerHTML = "<span style=\"font-size:1.3em;font-weight:bold\"><i>Please wait.  Results are loading...</i></span>";
+        document.getElementById('wishlist_search').innerHTML = "";
+        var wishlistTable = document.getElementById('webwishlist_resultsoutput');
+
+        var columnindex = $('th:contains("Details")').index();
+
+        for (i = 1; i < wishlistTable .rows.length; i++) {
+
+            var objCells = wishlistTable .rows.item(i).cells;
+				var activitynumber = objCells.item(columnindex).textContent;
+				var firstSpace = activitynumber.search(/\s/);
+				wishlist_search.innerHTML = wishlist_search.innerHTML + activitynumber.substring(0, firstSpace);
+                                wishlist_search.innerHTML = wishlist_search.innerHTML + ',';
+        }
+    wishlist_search.innerHTML = encodeURIComponent("search.html?module=AR&search=Yes&Keyword="+wishlist_search.innerHTML.substring(0,wishlist_search.innerHTML.lastIndexOf(',')));
+location.href = decodeURIComponent(wishlist_search.innerHTML);
+    }
+</script>
+
+<body onload="checkIfExist()">
+<div id="buttons" style="display:none">
+<p><span style="font-size:1.1em;font-weight:bold;color:#2b9948">New Feature</span></p>
+<a class="button primary processed ui-button ui-widget ui-state-default ui-corner-all" href="javascript:showTableData();">Show Wishlist Availability</a>
+<a class="button primary processed ui-button ui-widget ui-state-default ui-corner-all" style="float:right;" href="wishlist.html?action=clearwishlist">Clear Wishlist</a>
+<p id="loadingResults"></p>
+</div>
+
+<p id="wishlist_search" style="display:none"></p>
