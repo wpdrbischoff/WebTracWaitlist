@@ -23,9 +23,6 @@ function getSearchPageData(rows){
                     var status = search_page_dict[code];
                     var button = $(this).find("a.primary.button")[0];
 
-                    if (status != undefined) {
-                        status.trim();}
-
                     switch(status) {
                         case ("Unavailable" || "Full"):
                             $(button).css("background-color", "red");
