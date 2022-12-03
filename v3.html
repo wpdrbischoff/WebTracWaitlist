@@ -15,7 +15,7 @@ function getSearchPageData(rows){
             var html_ret = $.parseHTML(searchPageData);
             $(html_ret).find('.table#arwebsearch_output_table').each(function(){
                 var an = $(this).find('td[data-title="Activity #"]')[0].innerText;
-                var av = $(this).find('td[data-title="Availability"]')[0].innerText;;
+                var av = $(this).find('td[data-title="Availability"]')[0].innerText;
                 search_page_dict[an] = av;
             })
             rows.each(function(){
@@ -23,6 +23,10 @@ function getSearchPageData(rows){
                     var status = search_page_dict[code];
                     var button = $(this).find("a.primary.button")[0];
                     console.log(status);
+
+                    if (status != undefined) {
+                        status.trim();}
+
                     switch(status) {
                         case ("Unavailable" || "Full"):
                             $(button).css("background-color", "red");
@@ -32,6 +36,10 @@ function getSearchPageData(rows){
                         case "Waitlist":
                             $(button).css("background-color", "orange");
                             button.innerText = status;
+                            break;
+
+                        case "Check Availability":
+                            $(button).css("background-color", "dodgerblue"); 
                             break;
 
                         default:
@@ -53,4 +61,4 @@ function init() {
 }
 </script>
 
-<body onload="checkIfExist()">
+<body onload="init()">
