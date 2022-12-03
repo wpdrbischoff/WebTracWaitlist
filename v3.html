@@ -13,7 +13,7 @@ function getSearchPageData(rows){
     $.get(url)
         .done(function(searchPageData) {
             var html_ret = $.parseHTML(searchPageData);
-            $(html_ret).find('.table#arwebsearch_output_table').each(function(){
+            $(html_ret).find('#arwebsearch_output_table.table tbody tr').each(function(){
                 var an = $(this).find('td[data-title="Activity #"]')[0].innerText;
                 var av = $(this).find('td[data-title="Availability"]')[0].innerText;
                 search_page_dict[an] = av;
