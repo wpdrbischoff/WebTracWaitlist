@@ -5,7 +5,7 @@
 
 WebTrac Layout Comment Code with the Layout Program "wishlist.html"
 
-Testing: marginal, but it seems to work. As Jut put it: "*Use these files at your own discretion.  They are written by me and therefor nothing that is directly supported by VSI.*"**
+Testing: marginal, but it seems to work. As Jut put it: "*Use these files at your own discretion.  They are written by me and therefor nothing that is directly supported by VSI.*"
 
 ### v3: Colored buttons
 Adds colored buttons corresponding to a sections Availability status using an $.get() request searching keywords=act-sec,act-sec #'s.
